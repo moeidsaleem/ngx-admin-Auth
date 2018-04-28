@@ -9,6 +9,8 @@ import {MENU_ITEMS } from './pages/pages-menu'
 export class GlobalService {
 
 
+  successMessage;
+
 
     isLoggedIn:boolean =false;
 

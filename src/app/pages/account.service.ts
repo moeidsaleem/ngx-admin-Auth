@@ -10,10 +10,12 @@ export class AccountService {
   currentCfoId:string = '';
   currentCfoSub:string = '';
   isLoggedIn:boolean = false;
-  
+  isAuthenticated:boolean = false;
   
 
   constructor (private http: Http) {}
+
+
 
   // get("/api/overallbalance")
    getbalance(){

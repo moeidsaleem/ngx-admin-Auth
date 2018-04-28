@@ -30,7 +30,7 @@ export class AwsService {
 
  /************ RESOURCE IDENTIFIERS *************/
 
-  googleId:string = '968100487080-cta7k8fstmgic784k6jgb8l3a6jjilij.apps.googleusercontent.com';
+  googleId:string = '873878796815-mm6qi366rdhimkbm6a3e0npkehhqjljl.apps.googleusercontent.com'
   poolData = { 
         UserPoolId : 'us-east-2_NPxxzC6O4', //CognitoUserPool
         ClientId : '2ifc0t63fe4qer131f4gvj57mo', //CognitoUserPoolClient 
@@ -42,7 +42,7 @@ export class AwsService {
 
  /*********************************************/
 
-
+ signupConfirmMessage:any;
   constructor(private _http:Http,private api:GlobalService) {
    
     AWS.config.update({
@@ -140,8 +140,10 @@ export class AwsService {
         console.log(response);
       });
   }
+  
 
-  addToUserPool(callback,fullName,email,username,password,router,accountService){
+  atrixData;
+  addToUserPool(callback,fullName,email,username,password,router,accountService,api){
     let authenticationData = {
       Username : username,
       Password : password,
@@ -162,7 +164,7 @@ export class AwsService {
       
       attributeList.push(attributeEmail);
      // attributeList.push(attributeFullName);
-      userPool.signUp(username, password, attributeList, null, function(err, result){
+      return userPool.signUp(username, password, attributeList, null, function(err, result){
         if (err) {
             //alert(err);
             if (err.message.indexOf("User") !== -1){
@@ -179,15 +181,19 @@ export class AwsService {
         let cognitoUser = result.user;
         console.log('user name is ' + cognitoUser.getUsername());
         accountService.currentCfoId = cognitoUser.getUsername();
-        this.api.loggedIn();
-        router.navigateByUrl('app/pages/ui-features/tabs');
-
+        api.successMessage ='Please Verify Your email Address...';
+        accountService.isAuthenticated =true;
+       router.navigate(['/newlogin/signin'])
+      // api.loggedIn();
+        
     });
 
     
   }
 
-  authenticateUserPool(user,password,callback,router,accountService){
+
+  messagex;
+  authenticateUserPool(user,password,callback,router,accountService,api){
     let authenticationData = {
       Username : user,
       Password : password,
@@ -211,9 +217,12 @@ export class AwsService {
             if (result) {
               console.log ("Authenticated to Cognito User Pools!");  
               accountService.currentCfoId = cognitoGetUser.getUsername();
+              //got message 
+              console.log('got message running it');
+              callback.successMessage = 'User Created. Please verify your email address.';
               accountService.currentCfoSub = cognitoGetUser.signInUserSession.idToken.payload.sub;
-              this.api.loggedIn();
-              this.router.navigateByUrl('app/pages/ui-features/buttons');    
+              api.loggedIn();
+              router.navigate(['pages/ui-features/buttons'])
             }
           
           });
@@ -282,8 +291,8 @@ export class AwsService {
           cognitoGetUser.getSession(function(err, result) {
             if (result) {
               console.log ("Authenticated to Cognito User and Identity Pools!");  
-              this.api.loggedIn();
-              this.router.navigateByUrl('app/pages/ui-features/buttons');  
+              // this.api.loggedIn();
+              // this.router.navigateByUrl('app/pages/ui-features/buttons');  
               let token = result.getIdToken().getJwtToken();
               cognitoParams.Logins["cognito-idp."+region+".amazonaws.com/"+poolId] = token;
               AWS.config.credentials = new AWS.CognitoIdentityCredentials(cognitoParams);

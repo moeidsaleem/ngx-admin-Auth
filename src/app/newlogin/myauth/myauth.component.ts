@@ -22,7 +22,15 @@ import { GlobalService } from '../../globalService';
 export class MyauthComponent implements OnInit{
 
 
+  showAdvance:boolean =false;
+
   ngOnInit(){
+
+    if(this.api.successMessage){
+      setTimeout(()=>{
+        this.api.successMessage ='';
+      },5000)
+    }
     //check if he is already loggedIn then log him out 
     if(this.api.isLoggedIn == true){
       this.api.logOut();
@@ -65,7 +73,7 @@ export class MyauthComponent implements OnInit{
       this.subscribeToisInitialized();
       
     let initParams: InitParams = {
-      appId: '16102498426312551610249842631255',
+      appId: '218290731851762',
       xfbml: true,
       version: 'v2.8'
     };
@@ -85,6 +93,7 @@ export class MyauthComponent implements OnInit{
       .then((response: LoginResponse) =>{
         this.api.isLoggedIn =true;
         console.log(response)
+        this.api.loggedIn();
         this.router.navigate(['pages/ui-features/buttons'])
       })
       .catch((error: any) => console.error(error));
@@ -125,7 +134,8 @@ export class MyauthComponent implements OnInit{
       this.errorMessage="Please select an Identity Provider";
       return;
     } else if(this.chosenProvider == "cup"){
-        this.awsService.authenticateUserPool(this.username,this.password,this,this.router,this.accountService);
+        this.awsService.authenticateUserPool(this.username,this.password,this,this.router,this.accountService,
+           this.api);
         
         
       } else if(this.chosenProvider == "cip"){
@@ -258,7 +268,9 @@ export class MyauthComponent implements OnInit{
   }
 
 
-
+  goTo(link){
+    this.router.navigate([link])
+  }
 
   //LINKEDIN 
   public subscribeToLogin(){
@@ -278,6 +290,10 @@ export class MyauthComponent implements OnInit{
 
       }
     });
+  }
+
+  goSignIn(){
+    this.router.navigate(['/newlogin/signup'])
   }
 
 

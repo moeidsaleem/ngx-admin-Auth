@@ -12,8 +12,9 @@ declare const gapi: any;
   template: `<button class="radio-button" id="google" value="google" ><img src='assets/images/googleplussignin.png'></button>`
 })
 export class GoogleSigninComponent implements AfterViewInit {
-  //private clientId:string = '738519485992-fte4vuk3jeu03mme7lr93i69htgluq1e.apps.googleusercontent.com';
-  clientId:string = this.awsService.googleId;
+  private clientId:string = '873878796815-mm6qi366rdhimkbm6a3e0npkehhqjljl.apps.googleusercontent.com';
+  //secret='qZ9ETCODnJ3WCqXGcBaJFELN'
+ // clientId:string = this.awsService.googleId;
   private scope = [
     'profile',
     'email',

@@ -18,6 +18,7 @@ import { LinkedInSdkModule } from 'angular-linkedin-sdk';
 
 //import the Facebook Library 
 import { FacebookModule } from 'ngx-facebook';
+import { CommonModule } from '@angular/common';
 
 
  
@@ -37,6 +38,7 @@ const MYAUTH_COMPONENT = [
   imports: [
     FormsModule,
     HttpModule,
+    CommonModule,
    // MyauthRoutingModule,
     NbCardModule,
     LinkedInSdkModule,
