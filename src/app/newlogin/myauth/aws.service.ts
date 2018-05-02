@@ -221,6 +221,7 @@ export class AwsService {
               console.log('got message running it');
               callback.successMessage = 'User Created. Please verify your email address.';
               accountService.currentCfoSub = cognitoGetUser.signInUserSession.idToken.payload.sub;
+              localStorage.setItem('token',accountService.token);
               api.loggedIn();
               router.navigate(['pages/ui-features/buttons'])
             }

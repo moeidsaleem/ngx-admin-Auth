@@ -91,6 +91,8 @@ export class MyauthComponent implements OnInit{
  
     this.fb.login()
       .then((response: LoginResponse) =>{
+        console.log(response);
+        localStorage.setItem('token',response.authResponse.accessToken);
         this.api.isLoggedIn =true;
         console.log(response)
         this.api.loggedIn();
@@ -285,6 +287,8 @@ export class MyauthComponent implements OnInit{
       complete: () => {
         // Completed
         console.log('complete')
+        localStorage.setItem('token','linkedIn');
+        console.log(localStorage.getItem('token'))
         this.api.loggedIn();
         this.router.navigate(['pages/ui-features/buttons'])
 

@@ -1,13 +1,18 @@
 
 
 
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {MENU_ITEMS } from './pages/pages-menu'
+import { Router } from '@angular/router';
 
 
 @Injectable()
-export class GlobalService {
+export class GlobalService implements OnInit {
 
+  ngOnInit(){
+ 
+
+  }
 
   successMessage;
 
@@ -17,26 +22,16 @@ export class GlobalService {
     loggedIn(){
         this.isLoggedIn =true;
         MENU_ITEMS.pop();
-        MENU_ITEMS.push({
-            title: 'Accounts',
-            icon: 'fa fa-bank',
-            link: '/pages/ui-features',
-            children: [
-              {
-                title: 'Balance',
-                link: '/pages/ui-features/tabs',
-              },
-              {
-                title: 'Payments',
-                link: '/pages/ui-features/grid',
-              },
-            ],
-          },{
-              title:'LOGOUT',
-              icon:'fa fa-exit',
-              link:'/newlogin/signin',
-            
-          })
+        if(MENU_ITEMS.length<=0){
+          MENU_ITEMS.push({
+            title:'LOGOUT',
+            icon:'fa fa-exit',
+            link:'/newlogin/signin',
+          
+        });
+
+        }
+     
      
           
           
@@ -44,6 +39,7 @@ export class GlobalService {
 
     logOut(){
         this.isLoggedIn =false;
+        localStorage.removeItem('token');
         console.log('logged Out')
         MENU_ITEMS.pop();
         MENU_ITEMS.pop();

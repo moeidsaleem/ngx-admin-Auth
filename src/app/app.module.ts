@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewloginModule } from './newlogin/newlogin.module';
 import  {AccountService } from './pages/account.service';
 import { GlobalService } from './globalService';
+import { AuthGuard } from './newlogin/auth.guard';
 
 
 
@@ -37,7 +38,7 @@ import { GlobalService } from './globalService';
   bootstrap: [AppComponent],
   providers: [AccountService,
     { provide: APP_BASE_HREF, useValue: '/' },
-    GlobalService
+    GlobalService,AuthGuard
     
   ],
 })

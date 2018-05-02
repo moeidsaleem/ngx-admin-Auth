@@ -11,10 +11,11 @@ import {
 import { MyauthComponent } from './newlogin/myauth/myauth.component'; 
 import { NewloginComponent } from './newlogin/newlogin.component';
 import { SignupComponent } from './newlogin/myauth/signup/signup.component';
+import { AuthGuard } from './newlogin/auth.guard';
 
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule',canActivate:[AuthGuard] },
   {
     path: 'newlogin',
     component: NewloginComponent,
@@ -36,9 +37,9 @@ const routes: Routes = [
 
     ],
   },
-  { path: 'signup', component: SignupComponent },
+  { path: 'signup', component: SignupComponent, },
  { path: 'signin', component: MyauthComponent },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: 'pages', },
 ];
 
 const config: ExtraOptions = {

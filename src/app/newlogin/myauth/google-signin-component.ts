@@ -13,7 +13,7 @@ declare const gapi: any;
 })
 export class GoogleSigninComponent implements AfterViewInit {
   private clientId:string = '873878796815-mm6qi366rdhimkbm6a3e0npkehhqjljl.apps.googleusercontent.com';
-  //secret='qZ9ETCODnJ3WCqXGcBaJFELN'
+  secret='zCwLFi1AviZ8bb9PILfr9sOF'
  // clientId:string = this.awsService.googleId;
   private scope = [
     'profile',
@@ -42,7 +42,7 @@ export class GoogleSigninComponent implements AfterViewInit {
         let profile = googleUser.getBasicProfile();
         //console.log('Token || ' + googleUser.getAuthResponse().id_token);
         let authResponse = googleUser.getAuthResponse();
-        //console.log(authResponse);
+        console.log(authResponse);
         console.log("Authenticated to Google!")
     
 
@@ -52,6 +52,9 @@ export class GoogleSigninComponent implements AfterViewInit {
 
         //final 
         this.api.loggedIn();
+        let g = gapi.auth2.getAuthInstance();
+        localStorage.setItem('token',g);
+        console.log(authResponse);
         this.router.navigate(['pages/ui-features/buttons']).then(r=>{});
         
 
